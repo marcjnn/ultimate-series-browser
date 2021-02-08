@@ -1,8 +1,9 @@
-.page__footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100vw;
-  padding: 1rem;
-  color: $color-secondary;
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  // color: var(--color-small);
+  &__link {
+    text-decoration: none;
+    // color: var(--color-small);
+  }
 }
