@@ -1,6 +1,11 @@
 .main {
-  flex-grow: 1;
+  //  until I figure out how to make the rest NOT centered
+  // flex-grow: 1;
+  margin-top: 15px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  &__form {
+    width: 100%;
+  }
 }
