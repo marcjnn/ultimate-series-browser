@@ -9,13 +9,17 @@ const searchBtnElement = document.querySelector(".js-search-btn");
 const searchResultsElement = document.querySelector(".js-search-results");
 
 let searchResults = [];
+let favoriteShows = [];
+
+// search
 
 function getSearchResults() {
   const searchedTitle = getSearchQuery();
   fetch(`http://api.tvmaze.com/search/shows?q=${searchedTitle}`)
     .then((response) => response.json())
     .then(createSearchList)
-    .then(renderSearchResults);
+    .then(renderSearchResults)
+    .then(addListnerOnShowCard);
 }
 
 function getSearchQuery() {
@@ -46,9 +50,11 @@ function renderSearchResults() {
     const article = createElement("article");
     const img = createElement("img");
     const h2 = createElement("h2");
-    // add (CLASSES for later) and attributes
+    // add attributes and classes
     img.setAttribute("src", imgUrl);
     img.setAttribute("alt", result.name);
+    article.setAttribute("data-id", result.id);
+    article.classList.add("js-serie-card");
     // create content
     const h2Text = createTextNode(`${result.name}`);
     // nest
@@ -76,9 +82,42 @@ function checkForPhoto(result) {
   }
 }
 
+// render results
+
+// events
+
 function handleSearchBtn(event) {
   event.preventDefault();
   getSearchResults();
 }
 
 searchBtnElement.addEventListener("click", handleSearchBtn);
+
+function handleAddToFavorites(event) {
+  const selectedShow = event.currentTarget;
+  console.log(selectedShow);
+  // code for today; tmrrw adapt from my tshirt store
+  const selectedShowId = selectedShow.getAttribute("data-id");
+  console.log(selectedShowId);
+  // for (const show of favoriteShows) {
+  //   if (show.id === selectedShowId) {
+  //     return product;
+  //   }
+  // }
+  // // checking if in favs; later move to fnct
+  // if (!isFavorite(selectedShowId)) {
+  //   favoriteShows.push();
+  // }
+}
+
+// function isFavorite(id) {
+//   const favShow = favoriteShows.find((show) => show.id === id);
+//   return favShow ? true : false;
+// }
+
+function addListnerOnShowCard() {
+  const shows = document.querySelectorAll(".js-serie-card");
+  for (const show of shows) {
+    show.addEventListener("click", handleAddToFavorites);
+  }
+}
