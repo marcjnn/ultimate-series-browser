@@ -15,7 +15,7 @@ function getSearchResults() {
   fetch(`http://api.tvmaze.com/search/shows?q=${searchedTitle}`)
     .then((response) => response.json())
     .then(createSearchList)
-    .then(paintSearchResults);
+    .then(renderSearchResults);
 }
 
 function getSearchQuery() {
@@ -32,7 +32,7 @@ function createSearchList(data) {
   }
 }
 
-function paintSearchResults() {
+function renderSearchResults() {
   // remove all children before appending from new search
   while (searchResultsElement.firstChild) {
     searchResultsElement.firstChild.remove();
