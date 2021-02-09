@@ -10,6 +10,17 @@
   }
 }
 
+// create mixin for shared part between two cards
+.result {
+  &__card {
+    background-color: thistle;
+    &--fav {
+      background-color: teal;
+      color: whitesmoke;
+    }
+  }
+}
+
 .favourite {
   &__card {
     display: flex;

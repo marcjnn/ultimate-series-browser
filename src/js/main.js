@@ -4,8 +4,6 @@ console.log("A gruffalo? What's a gruffalo?");
 
 // ---------- START ----------
 
-const searchBtnElement = document.querySelector(".js-search-btn");
-
 let searchResults = [];
 let favoriteShows = [];
 
@@ -39,6 +37,7 @@ function createSearchList(data) {
     }
   }
   updateImageProperty();
+  updateFavoriteProperty();
 }
 
 function updateImageProperty() {
@@ -50,6 +49,23 @@ function updateImageProperty() {
         "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
     }
   }
+}
+
+function updateFavoriteProperty() {
+  for (const result of searchResults) {
+    if (checkIfFavorite(result.id)) {
+      result.favorite = true;
+    } else {
+      result.favorite = false;
+    }
+  }
+}
+
+// move to better place
+function updateSearchResults() {
+  updateFavoriteProperty();
+  renderSearchResults();
+  addListnerToShowCard();
 }
 
 // render search results
@@ -72,6 +88,11 @@ function renderSearchResults() {
     img.setAttribute("alt", result.name);
     article.setAttribute("data-id", result.id);
     article.classList.add("js-show-card");
+    if (result.favorite) {
+      article.classList.add("result__card--fav");
+    } else {
+      article.classList.add("result__card");
+    }
     // create content
     const h2Text = createTextNode(`${result.name}`);
     // nest
@@ -100,7 +121,7 @@ function updateFavoriteList(show) {
     removeFromFavorites(show);
   }
   renderFavoriteShows();
-  addListnerToRemoveFromFavBtn();
+  addListnerToRemoveFromFavBtns();
   saveToLocalStorage();
 }
 
@@ -118,6 +139,7 @@ function checkIfFavorite(selectedShowId) {
 }
 
 function addToFavorites(show) {
+  show.favorite = true;
   favoriteShows.push(show);
 }
 
@@ -125,7 +147,14 @@ function removeFromFavorites(showToRemove) {
   const indexShowToRemove = favoriteShows.findIndex(
     (show) => show.name === showToRemove.name
   );
+  showToRemove.favorite = false;
   favoriteShows.splice(indexShowToRemove, 1);
+}
+
+function resetFavorites() {
+  favoriteShows.splice(0, favoriteShows.length);
+  renderFavoriteShows();
+  saveToLocalStorage();
 }
 
 // render favorite shows
@@ -188,9 +217,11 @@ function handleSearchBtn(event) {
 }
 
 function handleFavorites(event) {
-  const selectedShowId = event.currentTarget.getAttribute("data-id");
-  const show = getShow(parseInt(selectedShowId));
+  const selectedShow = event.currentTarget;
+  // const selectedShowId = selectedShow.getAttribute("data-id");
+  const show = getShow(parseInt(selectedShow.getAttribute("data-id")));
   updateFavoriteList(show);
+  updateSearchResults();
 }
 
 function handleRemoveFromFavBtn(event) {
@@ -201,18 +232,13 @@ function handleRemoveFromFavBtn(event) {
       updateFavoriteList(favShow);
     }
   }
+  updateSearchResults();
 }
 
 function handleResetBtn() {
   // event.preventDefault???
   resetFavorites();
-}
-
-function resetFavorites() {
-  favoriteShows.splice(0, favoriteShows.length);
-  renderFavoriteShows();
-  saveToLocalStorage();
-  // i might need to render search results in case there are results in favs to see if they change color
+  updateSearchResults();
 }
 
 // events - listners
@@ -220,13 +246,12 @@ function resetFavorites() {
 function addListnerToShowCard() {
   const showElements = document.querySelectorAll(".js-show-card");
   for (const showElement of showElements) {
-    // showElement.addEventListener("click", handleAddToFavorites);
     showElement.addEventListener("click", handleFavorites);
   }
 }
 
 // I cannot use handleFavorites for x btn because it loops through search results not favorites
-function addListnerToRemoveFromFavBtn() {
+function addListnerToRemoveFromFavBtns() {
   const rmvBtnElements = document.querySelectorAll(".js-fav-rmv-btn");
   for (const btn of rmvBtnElements) {
     btn.addEventListener("click", handleRemoveFromFavBtn);
@@ -236,6 +261,7 @@ function addListnerToRemoveFromFavBtn() {
 }
 
 function addListnerToSearchBtn() {
+  const searchBtnElement = document.querySelector(".js-search-btn");
   searchBtnElement.addEventListener("click", handleSearchBtn);
 }
 
@@ -245,7 +271,7 @@ function runApp() {
   addListnerToSearchBtn();
   getFromLocalStorage();
   renderFavoriteShows();
-  addListnerToRemoveFromFavBtn();
+  addListnerToRemoveFromFavBtns();
 }
 
 runApp();
