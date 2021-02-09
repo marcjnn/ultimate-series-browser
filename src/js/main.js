@@ -12,7 +12,7 @@ let favoriteShows = [];
 
 // search
 
-function showSearchResults() {
+function search() {
   getSearchResults()
     .then(parseResponse)
     .then(createSearchList)
@@ -36,7 +36,6 @@ function createSearchList(data) {
     const showsList = data;
     for (const result of showsList) {
       searchResults.push(result.show);
-      // checkForPhoto()
     }
   }
   updateImageProperty();
@@ -74,7 +73,7 @@ function renderSearchResults() {
     img.setAttribute("src", result.image);
     img.setAttribute("alt", result.name);
     article.setAttribute("data-id", result.id);
-    article.classList.add("js-serie-card");
+    article.classList.add("js-show-card");
     // create content
     const h2Text = createTextNode(`${result.name}`);
     // nest
@@ -106,13 +105,11 @@ function createTextNode(data) {
 
 function addToFavorites(showId) {
   const show = getShow(showId);
-
   if (!checkIfFavorite(show.id)) {
     favoriteShows.push(show);
   }
-
   renderFavoriteShows();
-  // saveInLocalStorage()
+  saveToLocalStorage();
 }
 
 function getShow(showId) {
@@ -160,12 +157,28 @@ function renderFavoriteShows() {
   }
 }
 
+// local storage
+
+function saveToLocalStorage() {
+  const dataInString = JSON.stringify(favoriteShows);
+  localStorage.setItem("favoriteShows", dataInString);
+}
+
+function getFromLocalStorage() {
+  const savedFavoritesInString = localStorage.getItem("favoriteShows");
+  if (savedFavoritesInString !== null) {
+    const savedFavorites = JSON.parse(savedFavoritesInString);
+    favoriteShows = savedFavorites;
+    renderFavoriteShows();
+  }
+}
+
 // events
 
 function handleSearchBtn(event) {
   event.preventDefault();
   // show, creat, manage, render? but render in another function, then I'd have to change its name
-  showSearchResults();
+  search();
 }
 
 searchBtnElement.addEventListener("click", handleSearchBtn);
@@ -178,8 +191,10 @@ function handleAddToFavorites(event) {
 }
 
 function addListnerOnShowCard() {
-  const showElements = document.querySelectorAll(".js-serie-card");
+  const showElements = document.querySelectorAll(".js-show-card");
   for (const showElement of showElements) {
     showElement.addEventListener("click", handleAddToFavorites);
   }
 }
+
+getFromLocalStorage();
