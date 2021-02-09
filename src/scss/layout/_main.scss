@@ -1,31 +1,12 @@
 .main {
-  //  until I figure out how to make the rest NOT centered
-  // flex-grow: 1;
   margin-top: 15px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: min-content 1fr;
+  grid-template-areas:
+    "search search"
+    "favorites results";
   &__form {
     width: 100%;
-  }
-}
-
-// create mixin for shared part between two cards
-.result {
-  &__card {
-    background-color: thistle;
-    &--fav {
-      background-color: teal;
-      color: whitesmoke;
-    }
-  }
-}
-
-.favourite {
-  &__card {
-    display: flex;
-  }
-  &__img {
-    width: 30%;
   }
 }

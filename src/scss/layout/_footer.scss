@@ -1,8 +1,6 @@
 .footer {
-  // until I have some results
-  display: none;
-  // display: flex;
-  // justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
   // color: var(--color-small);
   &__link {
     text-decoration: none;

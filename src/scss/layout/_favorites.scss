@@ -1,0 +1,16 @@
+// this one goes with main.j - update there if changes
+// create mixin for shared part between two cards
+.favourite {
+  &__card {
+    display: flex;
+  }
+  &__img {
+    width: 20%;
+  }
+}
+
+// new css
+
+.favorites {
+  grid-area: favorites;
+}

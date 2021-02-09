@@ -1,0 +1,27 @@
+// this one goes with main.j - update there if changes
+// create mixin for shared part between two cards
+.result {
+  &__card {
+    background-color: thistle;
+    &--fav {
+      background-color: teal;
+      color: whitesmoke;
+    }
+  }
+}
+
+// new css
+
+.results {
+  grid-area: results;
+  &__list {
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $pageGap;
+    align-items: stretch;
+    text-align: center;
+    // grid-auto-columns: auto;
+    // grid-auto-rows: auto;
+  }
+}
