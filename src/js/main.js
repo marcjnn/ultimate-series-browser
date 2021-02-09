@@ -38,8 +38,8 @@ function createSearchList(data) {
 
 function renderSearchResults() {
   // remove all children before appending from new search
-  while (searchResultsElement.firstChild) {
-    searchResultsElement.firstChild.remove();
+  while (searchResultsElement.lastChild) {
+    searchResultsElement.lastChild.remove();
   }
   for (const result of searchResults) {
     // checks if the show comes with foto: returns medium size url or default placeholder if empty
