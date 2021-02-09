@@ -36,6 +36,21 @@ function createSearchList(data) {
     const showsList = data;
     for (const result of showsList) {
       searchResults.push(result.show);
+      // checkForPhoto()
+    }
+  }
+  updateImageProperty();
+}
+
+function updateImageProperty() {
+  for (const result of searchResults) {
+    if (result.image !== null) {
+      result.image = result.image.medium;
+      console.log(result);
+    } else {
+      result.image =
+        "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
+      console.log(result);
     }
   }
 }
@@ -49,8 +64,6 @@ function renderSearchResults() {
     searchResultsElement.lastChild.remove();
   }
   for (const result of searchResults) {
-    // checks if the show comes with foto: returns medium size url or default placeholder if empty
-    const imgUrl = checkForPhoto(result);
     // create containers
     // if I have time to make the grid - remove li and put directly articles inside section
     const li = createElement("li");
@@ -58,7 +71,7 @@ function renderSearchResults() {
     const img = createElement("img");
     const h2 = createElement("h2");
     // add attributes and classes
-    img.setAttribute("src", imgUrl);
+    img.setAttribute("src", result.image);
     img.setAttribute("alt", result.name);
     article.setAttribute("data-id", result.id);
     article.classList.add("js-serie-card");
@@ -73,13 +86,13 @@ function renderSearchResults() {
   }
 }
 
-function checkForPhoto(result) {
-  if (result.image !== null) {
-    return result.image.medium;
-  } else {
-    return "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
-  }
-}
+// function checkForPhoto(result) {
+//   if (result.image !== null) {
+//     return result.image.medium;
+//   } else {
+//     return "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
+//   }
+// }
 
 function createElement(element) {
   return document.createElement(element);
@@ -98,6 +111,7 @@ function addToFavorites(showId) {
     favoriteShows.push(show);
   }
 
+  renderFavoriteShows();
   // saveInLocalStorage()
 }
 
@@ -114,7 +128,35 @@ function checkIfFavorite(selectedShowId) {
   return favShow ? true : false;
 }
 
-// render list - favorites
+// render favorite shows
+
+function renderFavoriteShows() {
+  const favoriteShowsElement = document.querySelector(".js-favorite-shows");
+  while (favoriteShowsElement.lastChild) {
+    favoriteShowsElement.lastChild.remove();
+  }
+  for (const favShow of favoriteShows) {
+    // create containers
+    const li = createElement("li");
+    const article = createElement("article");
+    const img = createElement("img");
+    const h3 = createElement("h3");
+    // btn for remove
+    // add attributes and classes
+    img.setAttribute("src", favShow.image);
+    img.setAttribute("alt", favShow.name);
+    article.setAttribute("data-id", favShow.id);
+    article.classList.add("js-favorite-card");
+    // create content
+    const h3Text = createTextNode(`${favShow.name}`);
+    // nest
+    h3.appendChild(h3Text);
+    article.appendChild(img);
+    article.appendChild(h3);
+    li.appendChild(article);
+    favoriteShowsElement.appendChild(li);
+  }
+}
 
 // events
 
