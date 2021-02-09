@@ -13,4 +13,8 @@
 
 .favorites {
   grid-area: favorites;
+  &__title {
+    font-family: $fontTitle;
+    font-weight: 300;
+  }
 }
