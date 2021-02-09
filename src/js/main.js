@@ -11,7 +11,7 @@ const searchResultsElement = document.querySelector(".js-search-results");
 let searchResults = [];
 let favoriteShows = [];
 
-// search
+// search => get reults from API
 
 function getSearchResults() {
   const searchedTitle = getSearchQuery();
@@ -35,6 +35,8 @@ function createSearchList(data) {
     }
   }
 }
+
+// render list - search results
 
 function renderSearchResults() {
   // remove all children before appending from new search
@@ -66,14 +68,6 @@ function renderSearchResults() {
   }
 }
 
-function createElement(element) {
-  return document.createElement(element);
-}
-
-function createTextNode(data) {
-  return document.createTextNode(data);
-}
-
 function checkForPhoto(result) {
   if (result.image !== null) {
     return result.image.medium;
@@ -82,7 +76,36 @@ function checkForPhoto(result) {
   }
 }
 
-// render results
+function createElement(element) {
+  return document.createElement(element);
+}
+
+function createTextNode(data) {
+  return document.createTextNode(data);
+}
+
+// add to / remove from favorites
+
+function addToFavorites(showId) {
+  const show = getShow(showId);
+
+  console.log(show);
+  if (!isFavorite(show.id)) {
+    favoriteShows.push(show);
+  }
+
+  // saveInLocalStorage()
+}
+
+function getShow(showId) {
+  for (const result of searchResults) {
+    if (result.id === showId) {
+      return result;
+    }
+  }
+}
+
+// render list - favorites
 
 // events
 
@@ -94,26 +117,19 @@ function handleSearchBtn(event) {
 searchBtnElement.addEventListener("click", handleSearchBtn);
 
 function handleAddToFavorites(event) {
-  const selectedShow = event.currentTarget;
-  console.log(selectedShow);
+  // const selectedShow = event.currentTarget;
+  // console.log(selectedShow);
   // code for today; tmrrw adapt from my tshirt store
-  const selectedShowId = selectedShow.getAttribute("data-id");
-  console.log(selectedShowId);
-  // for (const show of favoriteShows) {
-  //   if (show.id === selectedShowId) {
-  //     return product;
-  //   }
-  // }
-  // // checking if in favs; later move to fnct
-  // if (!isFavorite(selectedShowId)) {
-  //   favoriteShows.push();
-  // }
+  const selectedShowId = event.currentTarget.getAttribute("data-id");
+
+  // parseInt because data-id comes as a string
+  addToFavorites(parseInt(selectedShowId));
 }
 
-// function isFavorite(id) {
-//   const favShow = favoriteShows.find((show) => show.id === id);
-//   return favShow ? true : false;
-// }
+function isFavorite(selectedShowId) {
+  const favShow = favoriteShows.find((show) => show.id === selectedShowId);
+  return favShow ? true : false;
+}
 
 function addListnerOnShowCard() {
   const shows = document.querySelectorAll(".js-serie-card");
