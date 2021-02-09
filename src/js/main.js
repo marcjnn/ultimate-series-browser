@@ -144,7 +144,6 @@ function renderFavoriteShows() {
     const img = createElement("img");
     const h3 = createElement("h3");
     const rmvBtn = createElement("button");
-    // btn for remove
     // add attributes and classes
     img.setAttribute("src", favShow.image);
     img.setAttribute("alt", favShow.name);
@@ -183,35 +182,17 @@ function getFromLocalStorage() {
   }
 }
 
-// events
+// events - handlers
 
 function handleSearchBtn(event) {
   event.preventDefault();
-  // show, creat, manage, render? but render in another function, then I'd have to change its name
   search();
 }
 
-searchBtnElement.addEventListener("click", handleSearchBtn);
-
-// function handleAddToFavorites(event) {
-//   const selectedShowId = event.currentTarget.getAttribute("data-id");
-
-//   // parseInt because data-id comes as a string
-//   addToFavorites(parseInt(selectedShowId));
-// }
-// I cannot use handleFavorites for x btn because it loops through search results not favorites
 function handleFavorites(event) {
   const selectedShowId = event.currentTarget.getAttribute("data-id");
   const show = getShow(parseInt(selectedShowId));
   updateFavoriteList(show);
-}
-
-function addListnerToShowCard() {
-  const showElements = document.querySelectorAll(".js-show-card");
-  for (const showElement of showElements) {
-    // showElement.addEventListener("click", handleAddToFavorites);
-    showElement.addEventListener("click", handleFavorites);
-  }
 }
 
 function handleRemoveFromFavBtn(event) {
@@ -223,6 +204,17 @@ function handleRemoveFromFavBtn(event) {
   }
 }
 
+// events - listners
+
+function addListnerToShowCard() {
+  const showElements = document.querySelectorAll(".js-show-card");
+  for (const showElement of showElements) {
+    // showElement.addEventListener("click", handleAddToFavorites);
+    showElement.addEventListener("click", handleFavorites);
+  }
+}
+
+// I cannot use handleFavorites for x btn because it loops through search results not favorites
 function addListnerToRemoveFromFavBtn() {
   const rmvBtnElements = document.querySelectorAll(".favourite__btn");
   for (const btn of rmvBtnElements) {
@@ -230,11 +222,15 @@ function addListnerToRemoveFromFavBtn() {
   }
 }
 
+function addListnerToSearchBtn() {
+  searchBtnElement.addEventListener("click", handleSearchBtn);
+}
+
 // run app
 
 function runApp() {
+  addListnerToSearchBtn();
   getFromLocalStorage();
-  console.log(favoriteShows);
   renderFavoriteShows();
   addListnerToRemoveFromFavBtn();
 }
