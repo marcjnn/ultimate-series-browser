@@ -6,39 +6,44 @@ console.log("A gruffalo? What's a gruffalo?");
 
 const searchInputElement = document.querySelector(".js-search-input");
 const searchBtnElement = document.querySelector(".js-search-btn");
-const searchResultsElement = document.querySelector(".js-search-results");
 
 let searchResults = [];
 let favoriteShows = [];
 
-// search => get reults from API
+// search
 
-function getSearchResults() {
-  const searchedTitle = getSearchQuery();
-  fetch(`http://api.tvmaze.com/search/shows?q=${searchedTitle}`)
-    .then((response) => response.json())
+function showSearchResults() {
+  getSearchResults()
+    .then(parseResponse)
     .then(createSearchList)
     .then(renderSearchResults)
     .then(addListnerOnShowCard);
 }
 
-function getSearchQuery() {
-  return searchInputElement.value;
+function getSearchResults() {
+  return fetch(
+    `http://api.tvmaze.com/search/shows?q=${searchInputElement.value}`
+  );
+}
+
+function parseResponse(response) {
+  return response.json();
 }
 
 function createSearchList(data) {
   searchResults = [];
   if (data !== null) {
     const showsList = data;
-    for (const show of showsList) {
-      searchResults.push(show.show);
+    for (const result of showsList) {
+      searchResults.push(result.show);
     }
   }
 }
 
-// render list - search results
+// render search results
 
 function renderSearchResults() {
+  const searchResultsElement = document.querySelector(".js-search-results");
   // remove all children before appending from new search
   while (searchResultsElement.lastChild) {
     searchResultsElement.lastChild.remove();
@@ -89,8 +94,7 @@ function createTextNode(data) {
 function addToFavorites(showId) {
   const show = getShow(showId);
 
-  console.log(show);
-  if (!isFavorite(show.id)) {
+  if (!checkIfFavorite(show.id)) {
     favoriteShows.push(show);
   }
 
@@ -105,35 +109,33 @@ function getShow(showId) {
   }
 }
 
+function checkIfFavorite(selectedShowId) {
+  const favShow = favoriteShows.find((show) => show.id === selectedShowId);
+  return favShow ? true : false;
+}
+
 // render list - favorites
 
 // events
 
 function handleSearchBtn(event) {
   event.preventDefault();
-  getSearchResults();
+  // show, creat, manage, render? but render in another function, then I'd have to change its name
+  showSearchResults();
 }
 
 searchBtnElement.addEventListener("click", handleSearchBtn);
 
 function handleAddToFavorites(event) {
-  // const selectedShow = event.currentTarget;
-  // console.log(selectedShow);
-  // code for today; tmrrw adapt from my tshirt store
   const selectedShowId = event.currentTarget.getAttribute("data-id");
 
   // parseInt because data-id comes as a string
   addToFavorites(parseInt(selectedShowId));
 }
 
-function isFavorite(selectedShowId) {
-  const favShow = favoriteShows.find((show) => show.id === selectedShowId);
-  return favShow ? true : false;
-}
-
 function addListnerOnShowCard() {
-  const shows = document.querySelectorAll(".js-serie-card");
-  for (const show of shows) {
-    show.addEventListener("click", handleAddToFavorites);
+  const showElements = document.querySelectorAll(".js-serie-card");
+  for (const showElement of showElements) {
+    showElement.addEventListener("click", handleAddToFavorites);
   }
 }
