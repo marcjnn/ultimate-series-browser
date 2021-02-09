@@ -93,11 +93,8 @@ function createTextNode(data) {
 
 // add to / remove from favorites
 
-function addToFavorites(showId) {
-  const show = getShow(showId);
-  if (!checkIfFavorite(show.id)) {
-    favoriteShows.push(show);
-  }
+function addToFavorites(show) {
+  favoriteShows.push(show);
   renderFavoriteShows();
   addListnerToRemoveFromFavBtn();
   saveToLocalStorage();
@@ -207,17 +204,41 @@ function handleSearchBtn(event) {
 
 searchBtnElement.addEventListener("click", handleSearchBtn);
 
-function handleAddToFavorites(event) {
-  const selectedShowId = event.currentTarget.getAttribute("data-id");
+// function handleAddToFavorites(event) {
+//   const selectedShowId = event.currentTarget.getAttribute("data-id");
 
+//   // parseInt because data-id comes as a string
+//   addToFavorites(parseInt(selectedShowId));
+// }
+function handleFavorites(event) {
+  const selectedShowId = event.currentTarget.getAttribute("data-id");
+  updateFavoriteList(selectedShowId);
+
+  // // parseInt because data-id comes as a string
+  // const show = getShow(parseInt(selectedShowId));
+  // if (!checkIfFavorite(show.id)) {
+  //   addToFavorites(show);
+  //   console.log(favoriteShows);
+  // } else {
+  //   removeFromFavorites(show);
+  // }
+}
+
+function updateFavoriteList(showId) {
   // parseInt because data-id comes as a string
-  addToFavorites(parseInt(selectedShowId));
+  const show = getShow(parseInt(showId));
+  if (!checkIfFavorite(show.id)) {
+    addToFavorites(show);
+  } else {
+    removeFromFavorites(show);
+  }
 }
 
 function addListnerToShowCard() {
   const showElements = document.querySelectorAll(".js-show-card");
   for (const showElement of showElements) {
-    showElement.addEventListener("click", handleAddToFavorites);
+    // showElement.addEventListener("click", handleAddToFavorites);
+    showElement.addEventListener("click", handleFavorites);
   }
 }
 
