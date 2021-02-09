@@ -9,3 +9,12 @@
     width: 100%;
   }
 }
+
+.favourite {
+  &__card {
+    display: flex;
+  }
+  &__img {
+    width: 30%;
+  }
+}

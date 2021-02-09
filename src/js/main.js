@@ -146,7 +146,9 @@ function renderFavoriteShows() {
     img.setAttribute("src", favShow.image);
     img.setAttribute("alt", favShow.name);
     article.setAttribute("data-id", favShow.id);
+    img.classList.add("favourite__img");
     article.classList.add("js-favorite-card");
+    article.classList.add("favourite__card");
     // create content
     const h3Text = createTextNode(`${favShow.name}`);
     // nest
