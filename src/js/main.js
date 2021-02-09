@@ -4,7 +4,6 @@ console.log("A gruffalo? What's a gruffalo?");
 
 // ---------- START ----------
 
-const searchInputElement = document.querySelector(".js-search-input");
 const searchBtnElement = document.querySelector(".js-search-btn");
 
 let searchResults = [];
@@ -21,6 +20,7 @@ function search() {
 }
 
 function getSearchResults() {
+  const searchInputElement = document.querySelector(".js-search-input");
   return fetch(
     `http://api.tvmaze.com/search/shows?q=${searchInputElement.value}`
   );
@@ -91,10 +91,16 @@ function createTextNode(data) {
   return document.createTextNode(data);
 }
 
-// add to / remove from favorites
+// update favorites
 
-function addToFavorites(show) {
-  favoriteShows.push(show);
+function updateFavoriteList(show) {
+  // parseInt because data-id comes as a string
+
+  if (!checkIfFavorite(show.id)) {
+    addToFavorites(show);
+  } else {
+    removeFromFavorites(show);
+  }
   renderFavoriteShows();
   addListnerToRemoveFromFavBtn();
   saveToLocalStorage();
@@ -113,20 +119,8 @@ function checkIfFavorite(selectedShowId) {
   return favShow ? true : false;
 }
 
-function handleRemoveFromFavBtn(event) {
-  const clickedBtnId = parseInt(event.currentTarget.getAttribute("data-id"));
-  for (const favShow of favoriteShows) {
-    if (favShow.id === clickedBtnId) {
-      removeFromFavorites(favShow);
-    }
-  }
-}
-
-function addListnerToRemoveFromFavBtn() {
-  const rmvBtnElements = document.querySelectorAll(".favourite__btn");
-  for (const btn of rmvBtnElements) {
-    btn.addEventListener("click", handleRemoveFromFavBtn);
-  }
+function addToFavorites(show) {
+  favoriteShows.push(show);
 }
 
 function removeFromFavorites(showToRemove) {
@@ -134,9 +128,6 @@ function removeFromFavorites(showToRemove) {
     (show) => show.name === showToRemove.name
   );
   favoriteShows.splice(indexShowToRemove, 1);
-  renderFavoriteShows();
-  addListnerToRemoveFromFavBtn();
-  saveToLocalStorage();
 }
 
 // render favorite shows
@@ -189,8 +180,6 @@ function getFromLocalStorage() {
   if (savedFavoritesInString !== null) {
     const savedFavorites = JSON.parse(savedFavoritesInString);
     favoriteShows = savedFavorites;
-    renderFavoriteShows();
-    addListnerToRemoveFromFavBtn();
   }
 }
 
@@ -210,28 +199,11 @@ searchBtnElement.addEventListener("click", handleSearchBtn);
 //   // parseInt because data-id comes as a string
 //   addToFavorites(parseInt(selectedShowId));
 // }
+// I cannot use handleFavorites for x btn because it loops through search results not favorites
 function handleFavorites(event) {
   const selectedShowId = event.currentTarget.getAttribute("data-id");
-  updateFavoriteList(selectedShowId);
-
-  // // parseInt because data-id comes as a string
-  // const show = getShow(parseInt(selectedShowId));
-  // if (!checkIfFavorite(show.id)) {
-  //   addToFavorites(show);
-  //   console.log(favoriteShows);
-  // } else {
-  //   removeFromFavorites(show);
-  // }
-}
-
-function updateFavoriteList(showId) {
-  // parseInt because data-id comes as a string
-  const show = getShow(parseInt(showId));
-  if (!checkIfFavorite(show.id)) {
-    addToFavorites(show);
-  } else {
-    removeFromFavorites(show);
-  }
+  const show = getShow(parseInt(selectedShowId));
+  updateFavoriteList(show);
 }
 
 function addListnerToShowCard() {
@@ -242,4 +214,29 @@ function addListnerToShowCard() {
   }
 }
 
-getFromLocalStorage();
+function handleRemoveFromFavBtn(event) {
+  const selectedShowId = parseInt(event.currentTarget.getAttribute("data-id"));
+  for (const favShow of favoriteShows) {
+    if (favShow.id === selectedShowId) {
+      updateFavoriteList(favShow);
+    }
+  }
+}
+
+function addListnerToRemoveFromFavBtn() {
+  const rmvBtnElements = document.querySelectorAll(".favourite__btn");
+  for (const btn of rmvBtnElements) {
+    btn.addEventListener("click", handleRemoveFromFavBtn);
+  }
+}
+
+// run app
+
+function runApp() {
+  getFromLocalStorage();
+  console.log(favoriteShows);
+  renderFavoriteShows();
+  addListnerToRemoveFromFavBtn();
+}
+
+runApp();
