@@ -17,7 +17,7 @@ function search() {
     .then(parseResponse)
     .then(createSearchList)
     .then(renderSearchResults)
-    .then(addListnerOnShowCard);
+    .then(addListnerToShowCard);
 }
 
 function getSearchResults() {
@@ -45,11 +45,9 @@ function updateImageProperty() {
   for (const result of searchResults) {
     if (result.image !== null) {
       result.image = result.image.medium;
-      console.log(result);
     } else {
       result.image =
         "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
-      console.log(result);
     }
   }
 }
@@ -85,14 +83,6 @@ function renderSearchResults() {
   }
 }
 
-// function checkForPhoto(result) {
-//   if (result.image !== null) {
-//     return result.image.medium;
-//   } else {
-//     return "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
-//   }
-// }
-
 function createElement(element) {
   return document.createElement(element);
 }
@@ -109,6 +99,7 @@ function addToFavorites(showId) {
     favoriteShows.push(show);
   }
   renderFavoriteShows();
+  addListnerToRemoveFromFavBtn();
   saveToLocalStorage();
 }
 
@@ -125,6 +116,32 @@ function checkIfFavorite(selectedShowId) {
   return favShow ? true : false;
 }
 
+function handleRemoveFromFavBtn(event) {
+  const clickedBtnId = parseInt(event.currentTarget.getAttribute("data-id"));
+  for (const favShow of favoriteShows) {
+    if (favShow.id === clickedBtnId) {
+      removeFromFavorites(favShow);
+    }
+  }
+}
+
+function addListnerToRemoveFromFavBtn() {
+  const rmvBtnElements = document.querySelectorAll(".favourite__btn");
+  for (const btn of rmvBtnElements) {
+    btn.addEventListener("click", handleRemoveFromFavBtn);
+  }
+}
+
+function removeFromFavorites(showToRemove) {
+  const indexShowToRemove = favoriteShows.findIndex(
+    (show) => show.name === showToRemove.name
+  );
+  favoriteShows.splice(indexShowToRemove, 1);
+  renderFavoriteShows();
+  addListnerToRemoveFromFavBtn();
+  saveToLocalStorage();
+}
+
 // render favorite shows
 
 function renderFavoriteShows() {
@@ -138,20 +155,26 @@ function renderFavoriteShows() {
     const article = createElement("article");
     const img = createElement("img");
     const h3 = createElement("h3");
+    const rmvBtn = createElement("button");
     // btn for remove
     // add attributes and classes
     img.setAttribute("src", favShow.image);
     img.setAttribute("alt", favShow.name);
+    rmvBtn.setAttribute("data-id", favShow.id);
     article.setAttribute("data-id", favShow.id);
     img.classList.add("favourite__img");
+    rmvBtn.classList.add("favourite__btn");
     article.classList.add("js-favorite-card");
     article.classList.add("favourite__card");
     // create content
     const h3Text = createTextNode(`${favShow.name}`);
+    const rmvBtnText = createTextNode("x");
     // nest
     h3.appendChild(h3Text);
+    rmvBtn.appendChild(rmvBtnText);
     article.appendChild(img);
     article.appendChild(h3);
+    article.appendChild(rmvBtn);
     li.appendChild(article);
     favoriteShowsElement.appendChild(li);
   }
@@ -170,6 +193,7 @@ function getFromLocalStorage() {
     const savedFavorites = JSON.parse(savedFavoritesInString);
     favoriteShows = savedFavorites;
     renderFavoriteShows();
+    addListnerToRemoveFromFavBtn();
   }
 }
 
@@ -190,7 +214,7 @@ function handleAddToFavorites(event) {
   addToFavorites(parseInt(selectedShowId));
 }
 
-function addListnerOnShowCard() {
+function addListnerToShowCard() {
   const showElements = document.querySelectorAll(".js-show-card");
   for (const showElement of showElements) {
     showElement.addEventListener("click", handleAddToFavorites);
