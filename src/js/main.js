@@ -94,8 +94,6 @@ function createTextNode(data) {
 // update favorites
 
 function updateFavoriteList(show) {
-  // parseInt because data-id comes as a string
-
   if (!checkIfFavorite(show.id)) {
     addToFavorites(show);
   } else {
@@ -150,7 +148,7 @@ function renderFavoriteShows() {
     rmvBtn.setAttribute("data-id", favShow.id);
     article.setAttribute("data-id", favShow.id);
     img.classList.add("favourite__img");
-    rmvBtn.classList.add("favourite__btn");
+    rmvBtn.classList.add("js-fav-rmv-btn");
     article.classList.add("js-favorite-card");
     article.classList.add("favourite__card");
     // create content
@@ -196,12 +194,25 @@ function handleFavorites(event) {
 }
 
 function handleRemoveFromFavBtn(event) {
+  // parseInt because data-id comes as a string
   const selectedShowId = parseInt(event.currentTarget.getAttribute("data-id"));
   for (const favShow of favoriteShows) {
     if (favShow.id === selectedShowId) {
       updateFavoriteList(favShow);
     }
   }
+}
+
+function handleResetBtn() {
+  // event.preventDefault???
+  resetFavorites();
+}
+
+function resetFavorites() {
+  favoriteShows.splice(0, favoriteShows.length);
+  renderFavoriteShows();
+  saveToLocalStorage();
+  // i might need to render search results in case there are results in favs to see if they change color
 }
 
 // events - listners
@@ -216,10 +227,12 @@ function addListnerToShowCard() {
 
 // I cannot use handleFavorites for x btn because it loops through search results not favorites
 function addListnerToRemoveFromFavBtn() {
-  const rmvBtnElements = document.querySelectorAll(".favourite__btn");
+  const rmvBtnElements = document.querySelectorAll(".js-fav-rmv-btn");
   for (const btn of rmvBtnElements) {
     btn.addEventListener("click", handleRemoveFromFavBtn);
   }
+  const resetBtnElement = document.querySelector(".js-fav-reset-btn");
+  resetBtnElement.addEventListener("click", handleResetBtn);
 }
 
 function addListnerToSearchBtn() {
