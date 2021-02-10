@@ -1,13 +1,16 @@
 .favorites {
   grid-area: favorites;
   &__title {
-    padding: 12px 0;
+    margin-bottom: 12px;
     font-family: $fontTitle;
     font-weight: 300;
     font-size: 18px;
   }
   &__shows {
     list-style-type: none;
+  }
+  &--hidden {
+    display: none;
   }
   .favoriteCard {
     margin-bottom: 12px;
@@ -39,8 +42,5 @@
         }
       }
     }
-  }
-  &--hidden {
-    display: none;
   }
 }

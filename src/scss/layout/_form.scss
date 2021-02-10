@@ -1,5 +1,7 @@
 .main__form {
   padding: 12px 0;
+  margin-bottom: 12px;
+  border-bottom: 2px solid $colorLight;
   width: 100%;
   grid-area: search;
 }
