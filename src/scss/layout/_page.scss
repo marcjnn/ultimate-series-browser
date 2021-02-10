@@ -2,7 +2,7 @@
   padding: 12px 30px;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  height: 100vh;
+  min-height: 100vh;
   font-family: $fontMain;
 }
 

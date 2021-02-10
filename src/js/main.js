@@ -85,6 +85,7 @@ function renderSearchResults() {
     img.setAttribute("src", result.image);
     img.setAttribute("alt", result.name);
     article.setAttribute("data-id", result.id);
+    article.setAttribute("title", "click to add to/remove from favorites");
     // add classes
     h2.classList.add("result__title");
     img.classList.add("result__img");

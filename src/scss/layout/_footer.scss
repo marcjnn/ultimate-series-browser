@@ -1,9 +1,11 @@
 .footer {
+  margin-top: 20px;
+  padding: 6px 0;
   display: flex;
   justify-content: flex-end;
-  // color: var(--color-small);
+  color: $colorDark;
   &__link {
     text-decoration: none;
-    // color: var(--color-small);
+    color: $colorDark;
   }
 }
