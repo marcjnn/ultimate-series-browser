@@ -222,6 +222,10 @@ function getFromLocalStorage() {
 
 // events - handlers
 
+function handleForm(event) {
+  event.preventDefault();
+}
+
 function handleSearchBtn(event) {
   event.preventDefault();
   search();
@@ -252,6 +256,16 @@ function handleResetBtn() {
 
 // events - listners
 
+function addListnerToForm() {
+  const formElement = document.querySelector(".js-form");
+  formElement.addEventListener("submit", handleForm);
+}
+
+function addListnerToSearchBtn() {
+  const searchBtnElement = document.querySelector(".js-search-btn");
+  searchBtnElement.addEventListener("click", handleSearchBtn);
+}
+
 function addListnerToShowCard() {
   const showElements = document.querySelectorAll(".js-show-card");
   for (const showElement of showElements) {
@@ -269,15 +283,11 @@ function addListnerToRemoveFromFavBtns() {
   resetBtnElement.addEventListener("click", handleResetBtn);
 }
 
-function addListnerToSearchBtn() {
-  const searchBtnElement = document.querySelector(".js-search-btn");
-  searchBtnElement.addEventListener("click", handleSearchBtn);
-}
-
 // run app
 
 function runApp() {
   addListnerToSearchBtn();
+  addListnerToForm();
   getFromLocalStorage();
   updateFavoritesVisibility();
   renderFavoriteShows();
