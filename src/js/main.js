@@ -161,8 +161,7 @@ function resetFavorites() {
 
 function updateFavoritesVisibility() {
   const favoritesElement = document.querySelector(".js-favorites");
-  // debugger;
-  if (favoriteShows === null) {
+  if (favoriteShows.length === 0) {
     favoritesElement.classList.add("favorites--hidden");
   } else {
     favoritesElement.classList.remove("favorites--hidden");
