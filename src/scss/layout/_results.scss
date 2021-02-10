@@ -2,10 +2,10 @@
 // create mixin for shared part between two cards
 .result {
   &__card {
-    background-color: thistle;
+    background-color: $colorBackground;
+
     &--fav {
-      background-color: teal;
-      color: whitesmoke;
+      background-color: $colorBackgroundFav;
     }
   }
 }

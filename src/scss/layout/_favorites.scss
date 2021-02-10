@@ -12,7 +12,7 @@
   .favoriteCard {
     margin-bottom: 12px;
     padding: 6px;
-    border: 1px solid $colorSun;
+    border: 1px solid $colorBackgroundFav;
     border-radius: 4px;
     display: flex;
     // justify-content: space-between;
@@ -33,7 +33,7 @@
       }
       &--reset {
         margin-top: 30px;
-        @include button(1px, $colorSun, white);
+        @include button(1px, $colorBackgroundFav, white);
         &:active {
           @include btn-active();
         }
