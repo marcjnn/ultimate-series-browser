@@ -28,7 +28,16 @@
       color: $colorDark;
     }
     &__btn {
-      color: $colorDark;
+      &--rmv {
+        color: $colorDark;
+      }
+      &--reset {
+        margin-top: 30px;
+        @include button(1px, $colorSun, white);
+        &:active {
+          @include btn-active();
+        }
+      }
     }
   }
 }

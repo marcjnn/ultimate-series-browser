@@ -181,7 +181,7 @@ function renderFavoriteShows() {
     img.classList.add("favoriteCard__img");
     h3.classList.add("favoriteCard__title");
     rmvBtn.classList.add("js-fav-rmv-btn");
-    rmvBtn.classList.add("favoriteCard__btn");
+    rmvBtn.classList.add("favoriteCard__btn--rmv");
     rmvBtn.classList.add("fas");
     rmvBtn.classList.add("fa-times");
     article.classList.add("js-favorite-card");

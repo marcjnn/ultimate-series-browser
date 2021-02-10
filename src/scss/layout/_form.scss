@@ -19,17 +19,9 @@
     }
   }
   &__button {
-    padding: 5px 16px;
-    outline: none;
-    font-family: $fontMain;
-    font-weight: 600;
-    border-radius: 12px;
-    border: 2px solid $colorDark;
-    color: $colorDark;
-    background-color: $colorLight;
+    @include button(2px, $colorDark, $colorLight);
     &:active {
-      border-color: $colorLight;
-      color: $colorLight;
+      @include btn-active();
       background-color: white;
     }
   }

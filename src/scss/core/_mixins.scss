@@ -1,0 +1,15 @@
+@mixin button($bdw, $color, $bgrColor) {
+  padding: 5px 16px;
+  outline: none;
+  font-family: $fontMain;
+  font-weight: 600;
+  border-radius: 12px;
+  border: $bdw solid;
+  color: $color;
+  background-color: $bgrColor;
+}
+
+@mixin btn-active() {
+  border-color: $colorLight;
+  color: $colorLight;
+}
