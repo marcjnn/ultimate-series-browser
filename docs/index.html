@@ -3,26 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Adalab Web Starter Kit</title>
+    <title>Modulo 2 - evaluacion final - by marcjnn</title>
     <link
-      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&family=Open+Sans:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/2b5f0495b4.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="./assets/css/main.css" />
     <link rel="icon" href="./assets/images/favicon.png" />
   </head>
 
   <body class="page">
-    <header></header>
+    <header class="header">
+      <h1 class="header__title">Ultimate series browser</h1>
+    </header>
 
     <main class="main">
-      <p>A mouse took a stroll through the deep dark wood</p>
+      <form action="" method="GET" class="main__form">
+        <!-- <label for="search"></label> -->
+        <input type="text" placeholder="search" class="form__input js-search-input" />
+        <button class="form__button js-search-btn">search</button>
+      </form>
+
+      <section class="favorites favorites--hidden js-favorites">
+        <h2 class="favorites__title">Your favourite shows</h2>
+        <ul class="favorites__shows js-favorite-shows"></ul>
+        <button
+          class="favoriteCard__btn--reset js-fav-reset-btn"
+          title="remove all from favorites"
+        >
+          clear all
+        </button>
+      </section>
+
+      <section class="results">
+        <ul class="results__list js-search-results"></ul>
+      </section>
+
     </main>
 
     <footer class="footer">
       <small class="copyright"
-        >© marcjnn 2021 @
-        <a href="https://adalab.es/" class="footer__link" title="ir a adalab.es"
+        >©
+        <a
+          href="https://github.com/marcjnn"
+          title="check github profile"
+          class="footer__link"
+          >marcjnn</a
+        >
+        2021 @
+        <a href="https://adalab.es/" class="footer__link" title="go to adalab.es"
           >Adalab</a
         ></small
       >
