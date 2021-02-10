@@ -5,3 +5,13 @@
   height: 100vh;
   font-family: $fontMain;
 }
+
+.main {
+  display: grid;
+  grid-template-columns: 20% 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "search search"
+    "favorites results";
+  column-gap: 20px;
+}

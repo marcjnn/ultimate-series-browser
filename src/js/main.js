@@ -171,15 +171,17 @@ function renderFavoriteShows() {
     const img = createElement("img");
     const h3 = createElement("h3");
     const rmvBtn = createElement("button");
-    // add attributes and classes
+    // add attributes
     img.setAttribute("src", favShow.image);
     img.setAttribute("alt", favShow.name);
     rmvBtn.setAttribute("data-id", favShow.id);
     article.setAttribute("data-id", favShow.id);
-    img.classList.add("favourite__img");
+    // add classes
+    img.classList.add("favoriteCard__img");
+    h3.classList.add("favoriteCard__title");
     rmvBtn.classList.add("js-fav-rmv-btn");
     article.classList.add("js-favorite-card");
-    article.classList.add("favourite__card");
+    article.classList.add("favoriteCard");
     // create content
     const h3Text = createTextNode(`${favShow.name}`);
     const rmvBtnText = createTextNode("x");

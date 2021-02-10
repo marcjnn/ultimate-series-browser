@@ -1,20 +1,31 @@
-// this one goes with main.j - update there if changes
-// create mixin for shared part between two cards
-.favourite {
-  &__card {
-    display: flex;
-  }
-  &__img {
-    width: 20%;
-  }
-}
-
-// new css
-
 .favorites {
   grid-area: favorites;
   &__title {
+    padding: 12px 0;
     font-family: $fontTitle;
     font-weight: 300;
+    font-size: 18px;
+  }
+  &__shows {
+    list-style-type: none;
+  }
+  .favoriteCard {
+    margin-bottom: 12px;
+    padding: 6px;
+    border: 1px solid $colorSun;
+    border-radius: 4px;
+    display: flex;
+    // justify-content: space-between;
+    &__title {
+      padding: 0 6px;
+      font-size: 14px;
+      font-weight: 400;
+      flex-grow: 1;
+      color: $colorDark;
+    }
+    &__img {
+      // width: 20%;
+      max-height: 100px;
+    }
   }
 }
