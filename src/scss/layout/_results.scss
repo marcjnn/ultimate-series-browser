@@ -18,7 +18,7 @@
     list-style-type: none;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: $pageGap;
+    gap: 20px;
     align-items: stretch;
     text-align: center;
     // grid-auto-columns: auto;
