@@ -1,15 +1,5 @@
 <main class="main">
-  <form action="" method="GET" class="main__form">
-    <!-- <label for="search"></label> -->
-    <input type="text" placeholder="search" class="js-search-input" />
-    <button class="js-search-btn">search</button>
-  </form>
-  <section class="favorites">
-    <h2 class="favorites__title">Your favourite shows</h2>
-    <ul class="js-favorite-shows"></ul>
-    <button class="js-fav-reset-btn">clear all</button>
-  </section>
-  <section class="results">
-    <ul class="results__list js-search-results"></ul>
-  </section>
+  <include src="./partials/form.html"></include>
+  <include src="./partials/favorites.html"></include>
+  <include src="./partials/searchresults.html"></include>
 </main>
