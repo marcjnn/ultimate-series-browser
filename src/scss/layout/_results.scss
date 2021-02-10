@@ -2,10 +2,20 @@
 // create mixin for shared part between two cards
 .result {
   &__card {
-    background-color: $colorBackground;
-
+    @include result-card($colorBackground, $colorBackground);
     &--fav {
-      background-color: $colorBackgroundFav;
+      @include result-card($colorDark, $colorBackgroundFav);
+    }
+  }
+  &__title {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  &__img {
+    max-width: 180px;
+    @media all and (max-width: 900px) {
+      max-width: 100px;
     }
   }
 }
@@ -21,5 +31,9 @@
     gap: 20px;
     align-items: stretch;
     text-align: center;
+    @media all and (max-width: 1200px) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
   }
 }

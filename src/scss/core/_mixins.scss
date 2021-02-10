@@ -13,3 +13,10 @@
   border-color: $colorLight;
   color: $colorLight;
 }
+
+@mixin result-card($color, $bgrColor) {
+  padding: 16px 0;
+  border: 2px solid $color;
+  background-color: $bgrColor;
+  border-radius: 8px;
+}

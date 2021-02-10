@@ -19,9 +19,7 @@ function search() {
 
 function getSearchResults() {
   const searchInputElement = document.querySelector(".js-search-input");
-  return fetch(
-    `http://api.tvmaze.com/search/shows?q=${searchInputElement.value}`
-  );
+  return fetch(`//api.tvmaze.com/search/shows?q=${searchInputElement.value}`);
 }
 
 function parseResponse(response) {
@@ -46,7 +44,7 @@ function updateImageProperty() {
       result.image = result.image.medium;
     } else {
       result.image =
-        "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
+        "https://via.placeholder.com/210x295/D8BB8F/115B75/?text=TV";
     }
   }
 }
@@ -83,10 +81,13 @@ function renderSearchResults() {
     const article = createElement("article");
     const img = createElement("img");
     const h2 = createElement("h2");
-    // add attributes and classes
+    // add attributes
     img.setAttribute("src", result.image);
     img.setAttribute("alt", result.name);
     article.setAttribute("data-id", result.id);
+    // add classes
+    h2.classList.add("result__title");
+    img.classList.add("result__img");
     article.classList.add("js-show-card");
     if (result.favorite) {
       article.classList.add("result__card--fav");
