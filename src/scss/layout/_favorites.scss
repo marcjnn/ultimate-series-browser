@@ -15,9 +15,7 @@
     border: 1px solid $colorBackgroundFav;
     border-radius: 4px;
     display: flex;
-    // justify-content: space-between;
     &__img {
-      // width: 20%;
       max-height: 100px;
     }
     &__title {
@@ -29,6 +27,8 @@
     }
     &__btn {
       &--rmv {
+        display: inline-block;
+        height: fit-content;
         color: $colorDark;
       }
       &--reset {
@@ -39,5 +39,8 @@
         }
       }
     }
+  }
+  &--hidden {
+    display: none;
   }
 }

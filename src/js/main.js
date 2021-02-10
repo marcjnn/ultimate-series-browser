@@ -120,6 +120,7 @@ function updateFavoriteList(show) {
   } else {
     removeFromFavorites(show);
   }
+  updateFavoritesVisibility();
   renderFavoriteShows();
   addListnerToRemoveFromFavBtns();
   saveToLocalStorage();
@@ -153,8 +154,19 @@ function removeFromFavorites(showToRemove) {
 
 function resetFavorites() {
   favoriteShows.splice(0, favoriteShows.length);
+  updateFavoritesVisibility();
   renderFavoriteShows();
   saveToLocalStorage();
+}
+
+function updateFavoritesVisibility() {
+  const favoritesElement = document.querySelector(".js-favorites");
+  // debugger;
+  if (favoriteShows === null) {
+    favoritesElement.classList.add("favorites--hidden");
+  } else {
+    favoritesElement.classList.remove("favorites--hidden");
+  }
 }
 
 // render favorite shows
@@ -272,6 +284,7 @@ function addListnerToSearchBtn() {
 function runApp() {
   addListnerToSearchBtn();
   getFromLocalStorage();
+  updateFavoritesVisibility();
   renderFavoriteShows();
   addListnerToRemoveFromFavBtns();
 }
