@@ -16,6 +16,10 @@
     border-radius: 4px;
     display: flex;
     // justify-content: space-between;
+    &__img {
+      // width: 20%;
+      max-height: 100px;
+    }
     &__title {
       padding: 0 6px;
       font-size: 14px;
@@ -23,9 +27,8 @@
       flex-grow: 1;
       color: $colorDark;
     }
-    &__img {
-      // width: 20%;
-      max-height: 100px;
+    &__btn {
+      color: $colorDark;
     }
   }
 }

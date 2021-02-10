@@ -170,24 +170,28 @@ function renderFavoriteShows() {
     const article = createElement("article");
     const img = createElement("img");
     const h3 = createElement("h3");
-    const rmvBtn = createElement("button");
+    const rmvBtn = createElement("i");
     // add attributes
     img.setAttribute("src", favShow.image);
     img.setAttribute("alt", favShow.name);
     rmvBtn.setAttribute("data-id", favShow.id);
+    rmvBtn.setAttribute("title", "remove from favorites");
     article.setAttribute("data-id", favShow.id);
     // add classes
     img.classList.add("favoriteCard__img");
     h3.classList.add("favoriteCard__title");
     rmvBtn.classList.add("js-fav-rmv-btn");
+    rmvBtn.classList.add("favoriteCard__btn");
+    rmvBtn.classList.add("fas");
+    rmvBtn.classList.add("fa-times");
     article.classList.add("js-favorite-card");
     article.classList.add("favoriteCard");
     // create content
     const h3Text = createTextNode(`${favShow.name}`);
-    const rmvBtnText = createTextNode("x");
+    // const rmvBtnText = createTextNode(`<i class="far fa-times-circle"></i>`);
     // nest
     h3.appendChild(h3Text);
-    rmvBtn.appendChild(rmvBtnText);
+    // rmvBtn.appendChild(rmvBtnText);
     article.appendChild(img);
     article.appendChild(h3);
     article.appendChild(rmvBtn);
