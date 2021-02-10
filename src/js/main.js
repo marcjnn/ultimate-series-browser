@@ -59,7 +59,6 @@ function updateFavoriteProperty() {
   }
 }
 
-// move to better place
 function updateSearchResults() {
   updateFavoriteProperty();
   renderSearchResults();
@@ -76,7 +75,6 @@ function renderSearchResults() {
   }
   for (const result of searchResults) {
     // create containers
-    // if I have time to make the grid - remove li and put directly articles inside section
     const li = createElement("li");
     const article = createElement("article");
     const img = createElement("img");
@@ -190,10 +188,8 @@ function renderFavoriteShows() {
     article.classList.add("favoriteCard");
     // create content
     const h3Text = createTextNode(`${favShow.name}`);
-    // const rmvBtnText = createTextNode(`<i class="far fa-times-circle"></i>`);
     // nest
     h3.appendChild(h3Text);
-    // rmvBtn.appendChild(rmvBtnText);
     article.appendChild(img);
     article.appendChild(h3);
     article.appendChild(rmvBtn);
@@ -226,7 +222,6 @@ function handleSearchBtn(event) {
 
 function handleFavorites(event) {
   const selectedShow = event.currentTarget;
-  // const selectedShowId = selectedShow.getAttribute("data-id");
   const show = getShow(parseInt(selectedShow.getAttribute("data-id")));
   updateFavoriteList(show);
   updateSearchResults();
@@ -244,7 +239,6 @@ function handleRemoveFromFavBtn(event) {
 }
 
 function handleResetBtn() {
-  // event.preventDefault???
   resetFavorites();
   updateSearchResults();
 }
