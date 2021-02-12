@@ -1,5 +1,6 @@
 "use strict";
 
+const recommendedLanguages = ["English", "Spanish", "Portuguese"];
 let searchResults = [];
 let favoriteShows = [];
 
@@ -75,6 +76,7 @@ function renderSearchResults() {
     const article = createElement("article");
     const img = createElement("img");
     const h2 = createElement("h2");
+    const p = createElement("p");
     // add attributes
     img.setAttribute("src", result.image);
     img.setAttribute("alt", result.name);
@@ -91,10 +93,21 @@ function renderSearchResults() {
     }
     // create content
     const h2Text = createTextNode(`${result.name}`);
+    const pText = createTextNode(`${result.language}`);
+    // language
     // nest
     h2.appendChild(h2Text);
+    p.appendChild(pText);
     article.appendChild(img);
     article.appendChild(h2);
+    article.appendChild(p);
+    // debugger
+    if (checkIfRecomended(result) === true) {
+      const pTwo = createElement("p");
+      const pTwoText = createTextNode("recomended");
+      pTwo.appendChild(pTwoText);
+      article.appendChild(pTwo);
+    }
     li.appendChild(article);
     searchResultsElement.appendChild(li);
   }
@@ -133,6 +146,12 @@ function getShow(showId) {
 function checkIfFavorite(selectedShowId) {
   const favShow = favoriteShows.find((show) => show.id === selectedShowId);
   return favShow ? true : false;
+}
+
+function checkIfRecomended(selectedShow) {
+  const language = recommendedLanguages.includes(`${selectedShow.language}`);
+  // const favShow = favoriteShows.find((show) => show.id === selectedShowId);
+  return language;
 }
 
 function addToFavorites(show) {
@@ -282,6 +301,15 @@ function addListnerToRemoveFromFavBtns() {
   const resetBtnElement = document.querySelector(".js-fav-reset-btn");
   resetBtnElement.addEventListener("click", handleResetBtn);
 }
+
+// LOG btn
+
+function handleLogBtn() {
+  console.log(`Tienes ${favoriteShows.length} favoritos`);
+}
+
+const logBtnElement = document.querySelector(".js-log-btn");
+logBtnElement.addEventListener("click", handleLogBtn);
 
 // run app
 
