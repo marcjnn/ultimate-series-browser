@@ -47,11 +47,7 @@ function updateImageProperty() {
 
 function updateFavoriteProperty() {
   for (const result of searchResults) {
-    if (checkIfFavorite(result.id)) {
-      result.favorite = true;
-    } else {
-      result.favorite = false;
-    }
+    result.favorite = checkIfFavorite(result.id) ? true : false;
   }
 }
 
