@@ -47,7 +47,7 @@ function updateImageProperty() {
 
 function updateFavoriteProperty() {
   for (const result of searchResults) {
-    result.favorite = checkIfFavorite(result.id) ? true : false;
+    result.favorite = isFavorite(result.id) ? true : false;
   }
 }
 
@@ -107,7 +107,7 @@ function createTextNode(data) {
 // update favorites
 
 function updateFavoriteList(show) {
-  if (!checkIfFavorite(show.id)) {
+  if (!isFavorite(show.id)) {
     addToFavorites(show);
   } else {
     removeFromFavorites(show);
@@ -126,7 +126,7 @@ function getShow(showId) {
   }
 }
 
-function checkIfFavorite(selectedShowId) {
+function isFavorite(selectedShowId) {
   const favShow = favoriteShows.find((show) => show.id === selectedShowId);
   return favShow ? true : false;
 }
