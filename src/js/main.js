@@ -27,7 +27,11 @@ function createSearchList(data) {
   if (data !== null) {
     const showsList = data;
     for (const result of showsList) {
-      searchResults.push(result.show);
+      searchResults.push({
+        id: result.show.id,
+        name: result.show.name,
+        image: result.show.image,
+      });
     }
   }
   updateImageProperty();
@@ -58,43 +62,6 @@ function updateSearchResults() {
 }
 
 // render search results
-
-// function renderSearchResults() {
-//   const searchResultsElement = document.querySelector(".js-search-results");
-//   // remove all children before appending from new search
-//   while (searchResultsElement.lastChild) {
-//     searchResultsElement.lastChild.remove();
-//   }
-//   for (const result of searchResults) {
-//     // create containers
-//     const li = createElement("li");
-//     const article = createElement("article");
-//     const img = createElement("img");
-//     const h2 = createElement("h2");
-//     // add attributes
-//     img.setAttribute("src", result.image);
-//     img.setAttribute("alt", result.name);
-//     article.setAttribute("data-id", result.id);
-//     article.setAttribute("title", "click to add to/remove from favorites");
-//     // add classes
-//     h2.classList.add("result__title");
-//     img.classList.add("result__img");
-//     article.classList.add("js-show-card");
-//     if (result.favorite) {
-//       article.classList.add("result__card--fav");
-//     } else {
-//       article.classList.add("result__card");
-//     }
-//     // create content
-//     const h2Text = createTextNode(`${result.name}`);
-//     // nest
-//     h2.appendChild(h2Text);
-//     article.appendChild(img);
-//     article.appendChild(h2);
-//     li.appendChild(article);
-//     searchResultsElement.appendChild(li);
-//   }
-// }
 
 function renderSearchResults() {
   const searchResultsElement = document.querySelector(".js-search-results");
