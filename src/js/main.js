@@ -59,6 +59,43 @@ function updateSearchResults() {
 
 // render search results
 
+// function renderSearchResults() {
+//   const searchResultsElement = document.querySelector(".js-search-results");
+//   // remove all children before appending from new search
+//   while (searchResultsElement.lastChild) {
+//     searchResultsElement.lastChild.remove();
+//   }
+//   for (const result of searchResults) {
+//     // create containers
+//     const li = createElement("li");
+//     const article = createElement("article");
+//     const img = createElement("img");
+//     const h2 = createElement("h2");
+//     // add attributes
+//     img.setAttribute("src", result.image);
+//     img.setAttribute("alt", result.name);
+//     article.setAttribute("data-id", result.id);
+//     article.setAttribute("title", "click to add to/remove from favorites");
+//     // add classes
+//     h2.classList.add("result__title");
+//     img.classList.add("result__img");
+//     article.classList.add("js-show-card");
+//     if (result.favorite) {
+//       article.classList.add("result__card--fav");
+//     } else {
+//       article.classList.add("result__card");
+//     }
+//     // create content
+//     const h2Text = createTextNode(`${result.name}`);
+//     // nest
+//     h2.appendChild(h2Text);
+//     article.appendChild(img);
+//     article.appendChild(h2);
+//     li.appendChild(article);
+//     searchResultsElement.appendChild(li);
+//   }
+// }
+
 function renderSearchResults() {
   const searchResultsElement = document.querySelector(".js-search-results");
   // remove all children before appending from new search
@@ -66,11 +103,11 @@ function renderSearchResults() {
     searchResultsElement.lastChild.remove();
   }
   for (const result of searchResults) {
-    // create containers
-    const li = createElement("li");
-    const article = createElement("article");
+    // create elements
+    const li = createElement("li", "");
+    const article = createElement("article", "");
     const img = createElement("img");
-    const h2 = createElement("h2");
+    const h2 = createElement("h2", `${result.name}`);
     // add attributes
     img.setAttribute("src", result.image);
     img.setAttribute("alt", result.name);
@@ -85,10 +122,7 @@ function renderSearchResults() {
     } else {
       article.classList.add("result__card");
     }
-    // create content
-    const h2Text = createTextNode(`${result.name}`);
     // nest
-    h2.appendChild(h2Text);
     article.appendChild(img);
     article.appendChild(h2);
     li.appendChild(article);
@@ -96,12 +130,15 @@ function renderSearchResults() {
   }
 }
 
-function createElement(element) {
-  return document.createElement(element);
-}
-
-function createTextNode(data) {
-  return document.createTextNode(data);
+function createElement(element, content) {
+  // to render a self-closing img element
+  if (element === "img") {
+    element = document.createElement(element);
+  } else {
+    element = document.createElement(element);
+    element.appendChild(document.createTextNode(content));
+  }
+  return element;
 }
 
 // update favorites
@@ -168,12 +205,12 @@ function renderFavoriteShows() {
     favoriteShowsElement.lastChild.remove();
   }
   for (const favShow of favoriteShows) {
-    // create containers
-    const li = createElement("li");
-    const article = createElement("article");
+    // create elements
+    const li = createElement("li", "");
+    const article = createElement("article", "");
     const img = createElement("img");
-    const h3 = createElement("h3");
-    const rmvBtn = createElement("i");
+    const h3 = createElement("h3", `${favShow.name}`);
+    const rmvBtn = createElement("i", "");
     // add attributes
     img.setAttribute("src", favShow.image);
     img.setAttribute("alt", favShow.name);
@@ -189,10 +226,7 @@ function renderFavoriteShows() {
     rmvBtn.classList.add("fa-times");
     article.classList.add("js-favorite-card");
     article.classList.add("favoriteCard");
-    // create content
-    const h3Text = createTextNode(`${favShow.name}`);
     // nest
-    h3.appendChild(h3Text);
     article.appendChild(img);
     article.appendChild(h3);
     article.appendChild(rmvBtn);
