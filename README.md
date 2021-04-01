@@ -1,4 +1,4 @@
-# Evaluación final - modulo 2 - JavaScript
+# Ultimate Series Browser
 
 I created this project during [Adalab Bootcamp](https://adalab.es/), at the end of JavaScript module using the provided [Adalab Web Starter Kit](https://github.com/Adalab/adalab-web-starter-kit).
 
